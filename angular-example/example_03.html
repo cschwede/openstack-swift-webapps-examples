@@ -1,0 +1,53 @@
+<html ng-app="example">
+    <head>
+	<link rel="stylesheet" href="bootstrap.min.css"></link>
+        <script src="angular.min.js"></script>
+        <script src="example_03.js"></script>
+        <script src="jquery.min.js"></script>
+        <script src="bootstrap.min.js"></script>
+    </head>
+    <body ng-controller="mainCtrl">
+        <table class="table table-striped">
+	        <tr>
+                <th><a href="#" ng-click="order('name')">Name</a></th>
+                <th><a href="#" ng-click="order('bytes')">Size</a></th>
+                <th><a href="#" ng-click="order('last_modified')">Date</a></th>
+                <th><a href="#" ng-click="order('content_type')">Content Type</a></th>
+                <th>Metadata</th>
+                <th>Preview</th>
+            </tr>
+
+            <tr ng-repeat="obj in objects | orderBy:sort:reverse">
+                <td><a href="{{obj.name}}">{{obj.name}}</a></td>
+                <td>{{obj.bytes | objsize}}</td>
+                <td>{{obj.last_modified | date:"EEE, d. MMM y - HH:mm:ss" }}</td>
+                <td>{{obj.content_type }}</td>
+                <td><a href="#" ng-click="showmeta(obj.name)" data-toggle="modal" data-target="#myModal">Show</a></td>
+                <td ng-if="obj.name.indexOf('.dng') > -1"><a href="#" ng-click="showpreview(obj.name)" data-toggle="modal" data-target="#myModal">Show</a></td>
+                <td ng-if="obj.name.indexOf('.dng') <= -1"></td>
+            </tr>
+        </table>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridSystemModalLabel" ng-if="metadata">Metadata</h4>
+        <h4 class="modal-title" id="gridSystemModalLabel" ng-if="preview">Preview</h4>
+      </div>
+      <div class="modal-body">
+        <img ng-if="preview" ng-src="{{preview}}" style="max-width: 100%";>
+		<table class="table table-striped" ng-if="metadata">
+            <tr ng-repeat="(k,v) in metadata">
+                <td>{{k}}</td>
+                <td>{{v}}</td>
+            </tr>
+		</table>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </body>
+</html>

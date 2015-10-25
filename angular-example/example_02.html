@@ -1,0 +1,28 @@
+<html ng-app="example">
+    <head>
+        <script src="angular.min.js"></script>
+        <script src="example_02.js"></script>
+    </head>
+    <body ng-controller="mainCtrl">
+        <table style="float:left;">
+	        <tr>
+                <th><a href="#" ng-click="sort='name'">Name</a></th>
+                <th><a href="#" ng-click="sort='bytes'">Size</a></th>
+                <th><a href="#" ng-click="sort='last_modified'">Date</a></th>
+            </tr>
+            <tr ng-repeat="obj in objects | orderBy:sort">
+                <td><a href="{{obj.name}}">{{obj.name}}</a></td>
+                <td>{{obj.bytes}}</td>
+                <td>{{obj.last_modified}}</td>
+                <td><a href="#" ng-click="showmeta(obj.name)">Show Meta</a></td>
+            </tr>
+        </table>
+
+	    <table ng-if="metadata">
+            <tr ng-repeat="(k,v) in metadata">
+                <td>{{k}}</td>
+                <td>{{v}}</td>
+            </tr>
+        </table>
+    </body>
+</html>

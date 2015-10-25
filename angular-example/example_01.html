@@ -1,0 +1,15 @@
+<html ng-app="example">
+    <head>
+        <script src="angular.min.js"></script>
+        <script src="example_01.js"></script>
+    </head>
+    <body ng-controller="mainCtrl">
+        <table>
+            <tr ng-repeat="obj in objects">
+                <td><a href="{{obj.name}}">{{obj.name}}</a></td>
+                <td>{{obj.bytes}}</td>
+                <td>{{obj.last_modified}}</td>
+            </tr>
+        </table>
+    </body>
+</html>

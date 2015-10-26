@@ -65,6 +65,7 @@ The easiest way to start is to store the examples in a public readable container
 within Swift itself. For example:
 
     cd angular-example
+    swift post -r ".r:*,.rlistings" public
     swift upload public angular.min.js
     swift upload public example_*
 

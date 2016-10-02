@@ -22,7 +22,7 @@ Getting started
 ---------------
 You'll need a running Swift all in one (SAIO) environment to use these examples.
 There is an included Ansible playbook and a Vagrantfile to setup such a SAIO
-using a Fedora 22 VM. The easiest way is simply to use vagrant:
+using a Fedora 24 VM. The easiest way is simply to use vagrant:
 
     vagrant up
 

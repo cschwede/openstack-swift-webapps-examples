@@ -1,7 +1,9 @@
 - hosts: all
 
   tasks:
-    - dnf: name={{item}}
+    - yum: name=https://rdoproject.org/repos/rdo-release.rpm
+
+    - yum: name={{item}}
       with_items:
         - openstack-utils
         - python-swiftclient
@@ -12,6 +14,7 @@
         - openstack-swift-object
         - openstack-swift-container
         - openstack-swift-account
+        - libselinux-python
 
     - lineinfile: dest=/etc/selinux/config regexp=^SELINUX= line=SELINUX=Permissive
 
@@ -70,6 +73,12 @@
         - xinetd
     
     - command: /usr/bin/swift-init start main creates=/var/run/swift/proxy-server.pid
+
+    - lineinfile: dest=/home/vagrant/.bashrc regexp=".*ST_AUTH.*" line="export ST_AUTH=http://127.0.0.1:8080/auth/v1.0/"
+
+    - lineinfile: dest=/home/vagrant/.bashrc regexp=".*ST_USER.*" line="export ST_USER=test:tester"
+
+    - lineinfile: dest=/home/vagrant/.bashrc regexp=".*ST_KEY.*" line="export ST_KEY=testing"
 
     - command: '/usr/bin/swift -U test:tester -K testing -A http://127.0.0.1:8080/auth/v1.0/ post -m "temp-url-key: secret"'
 

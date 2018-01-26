@@ -21,28 +21,13 @@ packages.
 Getting started
 ---------------
 You'll need a running Swift all in one (SAIO) environment to use these examples.
-There is an included Ansible playbook and a Vagrantfile to setup such a SAIO
-using a Fedora 24 VM. The easiest way is simply to use vagrant:
 
-    vagrant up
+One simply way is to run a single-replica environment in a Docker container,
+for example using https://github.com/cschwede/dockerswift/.
 
-You should be able to access the proxy afterwards:
+Once the container is running, check that you can access the proxy:
 
-    curl -I http://192.168.8.80:8080/info
-
-If you _don't_ use vagrant you need to provide a running Fedora instance with
-key-based SSH authentication. Ensure that the following command works without
-providing a password:
-
-    ssh -l root 192.168.8.80
-
-Apply the SAIO playbook:
-
-    ansible-playbook -i "192.168.8.80", -u root ansible-fedora-saio.yaml
-
-Check that you can access the proxy:
-
-    curl -I http://192.168.8.80:8080/info
+    curl -I http://127.0.0.1:8080/info
 
 
 Django example
@@ -70,4 +55,4 @@ within Swift itself. For example:
     swift upload public example_*
 
 Afterwards you can access the examples in your browser using the URL
-http://192.168.56.101:8080/v1/AUTH_test/public/example_01.html
+http://192.168.8.80:8080/v1/AUTH_test/public/example_01.html

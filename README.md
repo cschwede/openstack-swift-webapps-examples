@@ -41,8 +41,7 @@ You can run the example in the following manner:
 
     cd django-example
     python manage.py migrate
-    python manage.py runserver
-
+    python manage.py runserver 0.0.0.0:8000
 
 Angular example
 ---------------

@@ -1,5 +1,5 @@
 function mainCtrl($scope, $http) {
-    url = "http://192.168.8.80:8080/v1/AUTH_test/public"
+    url = "http://" + location.host + "/v1/AUTH_test/public"
     headers = {}
     $http.get(url, {headers: headers}).then(
         function(response) {

@@ -1,8 +1,8 @@
 Example apps for OpenStack Swift
 ================================
 
-This repository contains two example applications shown during the OpenStack
-Summit Tokyo 2015. One app is a server-side app using Django, the other one a
+This repository contains two example applications for OpenStack Swift.
+One app is a server-side app using Django, the other one a
 client-side app using Angular.
 
 Environment setup
@@ -13,7 +13,7 @@ packages.
 
 	virtualenv sampleenv
 	source sampleenv/bin/activate
-	pip install django python-swiftclient ansible
+	pip install django=1.11 python-swiftclient
 	export ST_AUTH=http://192.168.8.80:8080/auth/v1.0
 	export ST_KEY=testing
 	export ST_USER=test:tester

@@ -9,7 +9,7 @@ from urlparse import urlparse
 
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render
 from django.template import RequestContext
 
 from swiftclient import client
@@ -46,7 +46,7 @@ def download(request, pk):
     path = urlparse(url).path
 
     hmac_body = 'GET\n%s\n%s' % (expires, path)
-    signature = hmac.new(key, hmac_body, hashlib.sha1).hexdigest()
+    signature = hmac.new(str(key), str(hmac_body), hashlib.sha1).hexdigest()
     signed_url = '%s?temp_url_sig=%s&temp_url_expires=%s' % (
         url, signature, expires)
 
@@ -74,13 +74,14 @@ def upload(request):
 
     hmac_body = '%s\n%s\n%s\n%s\n%s' % (
         path, redirect_url, max_file_size, max_file_count, expires)
-    signature = hmac.new(key, hmac_body, hashlib.sha1).hexdigest()
+    signature = hmac.new(str(key), str(hmac_body), hashlib.sha1).hexdigest()
 
-    return render_to_response('upload.html', {
+    context = {
         'swift_url': swift_url, 'redirect_url': redirect_url,
         'max_file_size': max_file_size, 'max_file_count': max_file_count,
         'expires': expires, 'signature': signature
-        }, context_instance=RequestContext(request))
+        }
+    return render(request, 'upload.html', context)
 
 
 def finalize(request, prefix):
@@ -104,4 +105,4 @@ def finalize(request, prefix):
         dbentry.save()
         ids.append(dbentry.id)
 
-    return render_to_response('finalize.html', {'ids': ids, 'host': request.get_host()})
+    return render(request, 'finalize.html', {'ids': ids, 'host': request.get_host()})

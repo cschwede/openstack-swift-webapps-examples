@@ -26,12 +26,19 @@ def get_tempurl_key():
     (storage_url, auth_token) = client.get_auth(
         settings.SWIFT_AUTH_URL, settings.SWIFT_USER, settings.SWIFT_PASSWORD)
 
-    meta = client.head_account(storage_url, auth_token)
-    key = meta.get('x-account-meta-temp-url-key')
+    try:
+        meta = client.head_container(storage_url, auth_token,
+                                     settings.SWIFT_CONTAINER)
+        key = meta.get('x-container-meta-temp-url-key')
+    except client.ClientException:
+        client.put_container(storage_url, auth_token, settings.SWIFT_CONTAINER)
+        key = None
+
     if not key:
         key = random_key()
-        headers = {'x-account-meta-temp-url-key': key}
-        client.post_account(storage_url, auth_token, headers)
+        headers = {'x-container-meta-temp-url-key': key}
+        client.post_container(storage_url, auth_token,
+                              settings.SWIFT_CONTAINER, headers)
 
     return storage_url, key
 
